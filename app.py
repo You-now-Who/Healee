@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
+import requests
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 
 app = Flask(__name__)
@@ -69,6 +70,12 @@ def index():
 def submit():
     form_data = request.form.to_dict(flat=False)
     email = request.form['email']
+
+    # Store data on the Hedera ledger
+    file_id = requests.get("http://localhost:3000/add", json=form_data, headers={"Content-Type": "application/json"})
+    print(file_id.headers)
+    print(f"Data stored on Hedera network with fileID: {file_id.content}")
+
     old_data.append(form_data)
     jsonStr = json.dumps(old_data)
     print(jsonStr)
