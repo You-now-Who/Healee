@@ -40,25 +40,34 @@ def gen_report(df):
     # report + ('Gender distribution') + str(['gender'].value_counts())
     # report + ('Most common previous diseases') + str(df['prev_disease'].value_counts().head(3))
 
-    # print("PLOTS: ")
-    # plt.subplot(2, 2, 1)
+    print(('Total number of people: ', len(df)))
+    print(('Average age of people: ', df['age'].mean()))
+    print(('Most common diseases:'), df['disease'].value_counts().head(3))
+    print(('Most common ethinicities:'), df['ancestry'].value_counts().head(3))
+    print(('Most common symptoms:'), df['symptom_1'].value_counts().head(3))
+    print(('Gender distribution'), df['gender'].value_counts())
+    print(('Most common previous diseases'), df['prev_diseases'].value_counts().head(3))
+
+    print("PLOTS: ")
+    plt.subplot(2, 2, 1)
 
 
-    # plt.title('Disease distribution')
-    # df['disease'].value_counts().plot(kind='pie')
+    plt.title('Disease distribution')
+    df['disease'].value_counts().plot(kind='pie')
+    plt.show()
+
+    # plt.title('Age distribution')
+    # df['age'].value_counts().plot(kind='pie')
     # plt.show()
 
-    # # plt.title('Age distribution')
-    # # df['age'].value_counts().plot(kind='pie')
-    # # plt.show()
+    plt.title('Gender distribution')
+    df['gender'].value_counts().plot(kind='bar')
+    plt.show()
 
-    # plt.title('Gender distribution')
-    # df['gender'].value_counts().plot(kind='bar')
-    # plt.show()
-
-    # plt.title('Ancestry distribution')
-    # df['ancestry'].value_counts().plot(kind='bar')
-    # plt.show()
+    plt.title('Ancestry distribution')
+    df['ancestry'].value_counts().plot(kind='bar')
+    plt.show()
+    # print("report" + report)
     
     return(report)
 
@@ -88,10 +97,10 @@ def submit():
 
 @app.route("/analysis", methods=['GET'])
 def analysis():
-    report = gen_report(pd.read_json('sample.json'))
+    report = gen_report(pd.read_csv('data/data.csv'))
     # print(report)
     # report = gen_report(report_df)
-    return("Lmao")
+    return(report)
 
 
 
